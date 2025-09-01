@@ -23,6 +23,13 @@ function checkWinner() {
 
         if (turns[a] && turns[a] === turns[b] && turns[a] === turns[c]) {
             winLose.textContent = `Player '${turns[a]}' Wins!`;
+            cellBtn.forEach((btn) =>
+                btn.removeEventListener("click", handleClick)
+            );
+        }
+
+        if (!turns.includes("")) {
+            winLose.textContent = "It's a Draw!";
         }
     }
 }
@@ -54,5 +61,6 @@ restart.addEventListener("click", () => {
     });
     turnX = true;
     winLose.textContent = "Player 'X' Turn";
+    cellBtn.forEach((btn) => btn.addEventListener("click", handleClick));
     turns = ["", "", "", "", "", "", "", "", ""];
 });
