@@ -17,26 +17,36 @@ let winningCombo = [
     [2, 4, 6],
 ];
 
-cellBtn.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        const index = Number(btn.dataset.index);
+function checkWinner() {
+    for (let combo of winningCombo) {
+        const [a, b, c] = combo;
 
-        if (btn.textContent === "") {
-            if (turnX) {
-                btn.textContent = "X";
-                turnX = false;
-                turns[index] = "X";
-                winLose.textContent = "Player 'O' Turn";
-            } else {
-                btn.textContent = "O";
-                turnX = true;
-                turns[index] = "O";
-                winLose.textContent = "Player 'X' Turn";
-            }
-            console.log(turns);
+        if (turns[a] && turns[a] === turns[b] && turns[a] === turns[c]) {
+            winLose.textContent = `Player '${turns[a]}' Wins!`;
         }
-    });
-});
+    }
+}
+
+function handleClick() {
+    const index = Number(this.dataset.index);
+
+    if (this.textContent === "") {
+        if (turnX) {
+            this.textContent = "X";
+            turnX = false;
+            turns[index] = "X";
+            winLose.textContent = "Player 'O' Turn";
+        } else {
+            this.textContent = "O";
+            turnX = true;
+            turns[index] = "O";
+            winLose.textContent = "Player 'X' Turn";
+        }
+        checkWinner();
+    }
+}
+
+cellBtn.forEach((btn) => btn.addEventListener("click", handleClick));
 
 restart.addEventListener("click", () => {
     cellBtn.forEach((btn) => {
